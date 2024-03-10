@@ -1,0 +1,100 @@
+@font-face {
+  font-family: NBInternational;
+  src: url("../fonts/NBInternationalProBoo.ttf");
+}
+@font-face {
+  font-family: Headerline;
+  src: url("../fonts/Headline.ttf");
+}
+/* ---------- */
+:root {
+  --color-white: #fff;
+  --color-light: #f3eeea;
+  --color-beige: #ebe3d5;
+  --color-coffee: #b0a695;
+  --color-brown: #776b5d;
+  --color-orange: #F9B572;
+  --color-black: #000;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "NBInternational", sans-serif;
+  font-weight: normal;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background: red;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizelegibility;
+}
+#hero {
+  height: 100vh;
+  width: 100%;
+  background: #dadada;
+  position: relative;
+}
+#cursor {
+  width: 7.5vw;
+  height: 7.5vw;
+  background: #ff5f38;
+  border-radius: 50%;
+  z-index: 9;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  cursor: default;
+}
+#cursor h5 {
+  font-size: 1.15vw;
+}
+#hero video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  position: absolute;
+}
+#hero-content {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.321);
+  position: relative;
+  z-index: 2;
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+}
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 3vw;
+}
+nav h3 {
+  font-size: 1.4vw;
+  font-weight: 100;
+}
+nav h4 {
+  font-size: 1.4vw;
+  font-weight: 100;
+}
+#hero-content h1 {
+  position: relative;
+  font-family: "Headerline", sans-serif;
+  font-size: 27vw;
+  font-weight: 100;
+  line-height: 27vw;
+  z-index: 10;
+}
+#hero-content h1 span {
+  font-family: "Headerline", sans-serif;
+}
