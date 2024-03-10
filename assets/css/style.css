@@ -13,7 +13,7 @@
   --color-beige: #ebe3d5;
   --color-coffee: #b0a695;
   --color-brown: #776b5d;
-  --color-orange: #F9B572;
+  --color-orange: #f9b572;
   --color-black: #000;
 }
 * {
@@ -27,7 +27,7 @@ html,
 body {
   height: 100%;
   width: 100%;
-  background: red;
+  background: var(--color-coffee);
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizelegibility;
@@ -35,13 +35,13 @@ body {
 #hero {
   height: 100vh;
   width: 100%;
-  background: #dadada;
+  background: var(--color-coffee);
   position: relative;
 }
 #cursor {
   width: 7.5vw;
   height: 7.5vw;
-  background: #ff5f38;
+  background: var(--color-orange);
   border-radius: 50%;
   z-index: 9;
   position: fixed;
@@ -49,10 +49,12 @@ body {
   align-items: center;
   justify-content: center;
   transform: translate(-50%, -50%);
-  cursor: default;
+  opacity: 0;
 }
 #cursor h5 {
   font-size: 1.15vw;
+  font-weight: 500;
+  text-align: center;
 }
 #hero video {
   height: 100%;
@@ -63,9 +65,9 @@ body {
 #hero-content {
   height: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.321);
+  /* background: rgba(0, 0, 0, 0.321); */
   position: relative;
-  z-index: 2;
+  z-index: 10;
   color: var(--color-white);
   display: flex;
   align-items: center;
@@ -88,7 +90,6 @@ nav h4 {
   font-weight: 100;
 }
 #hero-content h1 {
-  position: relative;
   font-family: "Headerline", sans-serif;
   font-size: 27vw;
   font-weight: 100;
@@ -97,4 +98,89 @@ nav h4 {
 }
 #hero-content h1 span {
   font-family: "Headerline", sans-serif;
+}
+#content-introduce {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  padding: 5vw 2.8vw;
+}
+#content-introduce-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: 1.2vw;
+  margin-bottom: 1vw;
+  border-bottom: 1px solid #00000092;
+}
+#content-introduce-top h3 {
+  font-size: 1.7vw;
+  font-weight: 500;
+  width: 26%;
+}
+#content-introduce-top h4 {
+  font-size: 1.7vw;
+  font-weight: 500;
+}
+.elem {
+  overflow: hidden;
+}
+.elem h2 {
+  font-size: 4vw;
+  font-weight: 500;
+}
+#page-topic {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  padding: 3vw;
+}
+#page-topic-top {
+  text-align: center;
+}
+#page-topic-top h4 {
+  margin-bottom: 1vw;
+  font-size: 1vw;
+  font-weight: 500;
+}
+#page-topic-top h4 span {
+  font-weight: 0.7vw;
+  background: var(--color-black);
+  color: var(--color-white);
+  padding: 4px 8px;
+  border-radius: 3rem;
+}
+#page-topic-top h2 {
+  font-size: 4vw;
+  font-weight: 500;
+}
+#page-elements {
+  --column: 3;
+  --gap-y: 16px;
+    
+  height: fit-content;
+  flex-wrap: wrap;
+  display: flex;
+  grid-gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6vw;
+}
+#page-elements .box {
+  height: fit-content;
+  width: calc(
+    (100% - (var(--gap-y) * (var(--column) - 1))) / var(--column)
+  );
+  background: var(--color-brown);
+  overflow: hidden;
+}
+#page-elements .box > .wrapper {
+  position: relative;
+  padding-top: 56.25%;
+}
+#page-elements .box > .wrapper > *:is(video, img) {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
 }
