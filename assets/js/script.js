@@ -28,6 +28,20 @@ function locoScroll() {
   });
   ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
   ScrollTrigger.refresh();
+  // Scroll to contact
+  document.addEventListener("DOMContentLoaded", function () {
+    document
+      .querySelector("#contactLink")
+      .addEventListener("click", function () {
+        gsap.to(window, {
+          duration: 1,
+          scrollTo: {
+            y: "#contact-page",
+            offsetY: 0,
+          },
+        });
+      });
+  });
 }
 locoScroll();
 function cursorEffect() {
@@ -70,9 +84,22 @@ function pageContentAnimation() {
       scrub: true,
     },
   });
-  gsap.from("hr", {
+  gsap.from(".line-1", {
     scrollTrigger: {
-      trigger: "hr",
+      trigger: ".line-1",
+      scroller: "#main",
+      opacity: 0,
+      scrub: true,
+      start: "center bottom",
+      end: "center center",
+    },
+    scaleX: 0,
+    transformOrigin: "left center",
+    ease: "none",
+  });
+  gsap.from(".line-2", {
+    scrollTrigger: {
+      trigger: ".line-2",
       scroller: "#main",
       opacity: 0,
       scrub: true,
@@ -92,7 +119,17 @@ function pageContentAnimation() {
       scroller: "#main",
       start: "top center",
       end: "top top",
-      // scrub: true,
+    },
+  });
+  gsap.from("#contact-page .topic", {
+    x: -80,
+    opacity: 0,
+    scrollTrigger: {
+      trigger: "#contact-page",
+      scroller: "#main",
+      start: "top center",
+      end: "top top",
+      scrub: true,
     },
   });
   gsap.to("#work-elements .box", {
@@ -107,7 +144,20 @@ function pageContentAnimation() {
       end: "top top",
       scrub: true,
     },
-  })
+  });
+  gsap.from(".contact-list .contact-item", {
+    y: -80,
+    stagger: 0.15,
+    opacity: 0,
+    duration: 0.4,
+    scrollTrigger: {
+      trigger: "#contact-page",
+      scroller: "#main",
+      start: "top center",
+      end: "top top",
+      scrub: true,
+    },
+  });
 }
 pageContentAnimation();
 // Loader
@@ -127,8 +177,8 @@ tl.to("#loader", {
   opacity: 0,
 });
 tl.to("#loader", {
-  display: "none"
-})
+  display: "none",
+});
 // Hero
 tl.from("#hero-content h1 span", {
   y: 100,
