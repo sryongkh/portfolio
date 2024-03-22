@@ -146,7 +146,7 @@ function pageContentAnimation() {
 pageContentAnimation();
 function addBoxToWorkElements() {
   document.addEventListener("DOMContentLoaded", function () {
-    fetch("/assets/data/project.json")
+    fetch("assets/data/project.json")
       .then((response) => response.json())
       .then((data) => {
         const workElements = document.getElementById("work-elements"); // ย้ายมานอก loop
@@ -211,7 +211,7 @@ function addBoxToWorkElements() {
 addBoxToWorkElements();
 function addContactItem() {
   document.addEventListener("DOMContentLoaded", () => {
-    fetch("/assets/data/contact.json")
+    fetch("assets/data/contact.json")
       .then((response) => response.json())
       .then((data) => {
         const contactContainer = document.getElementById("contact-page");
