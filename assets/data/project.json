@@ -1,0 +1,58 @@
+[
+  {
+    "link": "https://prasertcaladium.com/",
+    "name": "prasert caladium",
+    "logo": "/assets/logo/prasert.svg",
+    "stack": ["Wordpress", "HTML", "CSS", "JavaScript", "Figma"],
+    "img": "/assets/img/prasertcaladium-cover.png",
+    "video": "/assets/video/prasertcaladium.mp4"
+  },
+  {
+    "link": "https://healme.co.th/",
+    "name": "healme",
+    "logo": "/assets/logo/healme.svg",
+    "stack": ["Wordpress", "HTML", "CSS", "JavaScript", "Figma"],
+    "img": "/assets/img/healme-cover.png",
+    "video": "/assets/video/healme.mp4"
+  },
+  {
+    "link": "https://realms.in.th/",
+    "name": "realm",
+    "logo": "/assets/logo/realm.svg",
+    "stack": ["Wordpress", "HTML", "CSS", "JavaScript", "Figma"],
+    "img": "/assets/img/realm-cover.png",
+    "video": "/assets/video/realm.mp4"
+  },
+  {
+    "link": "https://blueventureact.com/",
+    "name": "blueventure actuarial",
+    "logo": "/assets/logo/blueventure.webp",
+    "stack": ["Wordpress", "HTML", "CSS", "JavaScript", "Figma"],
+    "img": "/assets/img/blueventure-cover.png",
+    "video": "/assets/video/blueventure.mp4"
+  },
+  {
+    "link": "https://coachlek888.com/",
+    "name": "coachlek",
+    "logo": "/assets/logo/coachleklogo.png",
+    "stack": ["Wordpress", "HTML", "CSS", "JavaScript", "Figma"],
+    "img": "/assets/img/coachlek-cover.png",
+    "video": "/assets/video/coachlek.mp4"
+  },
+  {
+    "link": "https://weewie.webbkk.com/",
+    "name": "weewie vacation",
+    "logo": "/assets/logo/weewie.svg",
+    "stack": ["Wordpress", "HTML", "CSS", "JavaScript", "Figma"],
+    "img": "/assets/img/weewie-cover.png",
+    "video": "/assets/video/weewie.mp4"
+  },
+  {
+    "link": "https://www.shinpasit.com/",
+    "name": "shinpasit",
+    "logo": "/assets/logo/shinpasitlogo.svg",
+    "stack": ["Wordpress", "HTML", "CSS", "JavaScript", "Figma"],
+    "img": "/assets/img/shinpasit-cover.png",
+    "video": "/assets/video/shinpasit.mp4"
+  }
+]

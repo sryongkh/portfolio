@@ -122,10 +122,12 @@ nav a {
   font-family: "Headerline", sans-serif;
 }
 #content-introduce {
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   position: relative;
   padding: 5vw 2.8vw;
+  display: flex;
+  flex-direction: column;
 }
 #content-introduce-top {
   display: flex;
@@ -151,6 +153,11 @@ nav a {
   height: 100%;
   display: flex;
   flex-direction: column;
+  grid-gap: 4rem;
+}
+.introduce-container {
+  height: 100%;
+  margin-block: auto;
 }
 #content-introduce .elem {
   overflow: hidden;
@@ -170,9 +177,14 @@ nav a {
   position: relative;
   padding: 3vw;
   background: var(--color-brown);
+  display: flex;
+  flex-direction: column;
+  grid-gap: 1rem;
 }
 #work-page-top {
   text-align: center;
+  border-bottom: 1px solid #36312b;
+  padding-bottom: 1rem;
 }
 #work-page-top h4 {
   margin-bottom: 1vw;
@@ -226,9 +238,10 @@ nav a {
   left: 50%;
   transform: translateX(-50%);
   color: var(--color-beige);
-  mix-blend-mode: difference;
+  mix-blend-mode: screen;
   width: auto;
-  height: 3vw;
+  max-height: 5rem;
+  height: 100%;
 }
 #work-elements .box img {
   position: absolute;
@@ -303,6 +316,7 @@ nav a {
   color: var(--color-beige);
 }
 #contact-page .contact-list .contact-item h3 {
+  text-transform: uppercase;
   font-size: 3vw;
 }
 #contact-page .contact-list .contact-item .line-hv {
@@ -344,4 +358,79 @@ nav a {
 }
 #loader h3 {
   font-size: 2vw;
+}
+/* Responsive */
+@media (max-width: 768.99px) {
+  nav h3,
+  nav a {
+    font-size: 1.5rem;
+  }
+  #hero-content {
+    grid-gap: 2vw;
+  }
+  #hero-content h1 {
+    font-size: 22vw;
+  }
+  #content-introduce-top h3,
+  #work-page-top h2 {
+    font-size: 1rem;
+    width: 100%;
+  }
+  #content-introduce .elem h2 {
+    font-size: 1.5rem;
+  }
+}
+@media (max-width: 578.99px) {
+  #hero-content h1 {
+    font-size: 20vw;
+  }
+}
+@media (max-width: 425.99px) {
+  nav h3,
+  nav a {
+    font-size: 1rem;
+  }
+  #hero-content h1 {
+    font-size: 16vw;
+  }
+  #work-page {
+    grid-gap: 6rem;
+    padding: 1rem;
+  }
+  #work-page-top {
+    margin-top: 1rem;
+  }
+  #work-page-top h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  #work-page-top h2 {
+    text-decoration: underline;
+  }
+  #work-page-top h4 span {
+    font-size: 1.5rem;
+  }
+  #work-elements .box {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+  }
+  #work-elements .box .logo {
+    max-height: 2.5rem;
+  }
+  #contact-page {
+    padding: 1rem;
+  }
+  #contact-page hr {
+    margin-bottom: 1rem;
+  }
+  #contact-page .topic {
+    font-size: 1.5rem;
+  }
+  #contact-page .contact-list .contact-item h3 {
+    font-size: 1.5rem;
+  }
+  #contact-page .contact-list .contact-item {
+    padding: 1rem 0;
+  }
 }
