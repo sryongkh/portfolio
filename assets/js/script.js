@@ -155,6 +155,7 @@ function addBoxToWorkElements() {
           const boxLink = document.createElement("a");
           boxLink.setAttribute("class", "box");
           boxLink.setAttribute("href", item.link);
+          boxLink.setAttribute("target", "_blank");
           // Badge elements
           const techStack = document.createElement("div");
           techStack.setAttribute("class", "techstack");
