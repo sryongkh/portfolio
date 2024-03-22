@@ -94,6 +94,9 @@ a {
   flex-direction: column;
   justify-content: space-between;
 }
+#hero-content *:not(h1, h1 span) {
+  transition: all 0.2s ease;
+}
 nav {
   display: flex;
   align-items: center;
@@ -209,7 +212,7 @@ nav a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 18%;
+  margin-top: 10%;
 }
 #work-elements * {
   transition: var(--transition);
@@ -360,7 +363,15 @@ nav a {
   font-size: 2vw;
 }
 /* Responsive */
+@media (max-width: 1299.99px) {
+  #work-elements .box .techstack .tech-item {
+    font-size: 1rem;
+  }
+}
 @media (max-width: 768.99px) {
+  #loader h3 {
+    font-size: 2rem;
+  }
   nav h3,
   nav a {
     font-size: 1.5rem;
@@ -371,6 +382,13 @@ nav a {
   #hero-content h1 {
     font-size: 22vw;
   }
+  #work-page,
+  #contact-page {
+    padding: 2.5rem;
+  }
+  #work-elements {
+    margin-top: 18%;
+  }
   #content-introduce-top h3,
   #work-page-top h2 {
     font-size: 1rem;
@@ -379,10 +397,28 @@ nav a {
   #content-introduce .elem h2 {
     font-size: 1.5rem;
   }
+  #work-page-top h4 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  #work-page-top h4 span {
+    font-size: 1.5rem;
+  }
+  #work-elements .box .techstack {
+    grid-gap: 0.4rem;
+  }
+  #work-elements .box .techstack .tech-item {
+    font-size: 0.8rem;
+  }
 }
 @media (max-width: 578.99px) {
   #hero-content h1 {
     font-size: 20vw;
+  }
+  #work-elements .box {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
   }
 }
 @media (max-width: 425.99px) {
@@ -400,20 +436,8 @@ nav a {
   #work-page-top {
     margin-top: 1rem;
   }
-  #work-page-top h4 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-  }
   #work-page-top h2 {
     text-decoration: underline;
-  }
-  #work-page-top h4 span {
-    font-size: 1.5rem;
-  }
-  #work-elements .box {
-    width: 100%;
-    overflow: hidden;
-    display: flex;
   }
   #work-elements .box .logo {
     max-height: 2.5rem;
