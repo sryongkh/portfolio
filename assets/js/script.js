@@ -1,12 +1,15 @@
-// Locomotive
-function locoScroll() {
+// Locomotive Scroll Configuration
+const initLocomotiveScroll = () => {
   gsap.registerPlugin(ScrollTrigger);
+
   const locoScroll = new LocomotiveScroll({
     el: document.querySelector("#main"),
     smooth: true,
     tablet: { smooth: true },
     smartphone: { smooth: true },
   });
+
+  // ScrollTrigger Configuration
   locoScroll.on("scroll", ScrollTrigger.update);
   ScrollTrigger.scrollerProxy("#main", {
     scrollTop(value) {
@@ -26,255 +29,415 @@ function locoScroll() {
       ? "transform"
       : "fixed",
   });
+
+  // Event Listeners
   ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
   ScrollTrigger.refresh();
-  // Scroll to contact
-  document.addEventListener("DOMContentLoaded", function () {
+
+  // Contact Link Scroll
+  document.addEventListener("DOMContentLoaded", () => {
     document
       .querySelector("#contactLink")
-      .addEventListener("click", function () {
-        gsap.to(window, {
-          duration: 1,
-          scrollTo: {
-            y: "#contact-page",
-            offsetY: 0,
-          },
-        });
+      .addEventListener("click", (event) => {
+        event.preventDefault();
+        locoScroll.scrollTo(document.querySelector("#contact-page"));
       });
   });
-}
-locoScroll();
-function cursorEffect() {
-  let heroContent = document.querySelector("#hero-content");
-  let cursor = document.querySelector("#cursor");
 
-  heroContent.addEventListener("mousemove", function (dets) {
+  return locoScroll;
+};
+
+// Cursor Effect
+const initCursorEffect = () => {
+  const heroContent = document.querySelector("#hero-content");
+  const cursor = document.querySelector("#cursor");
+
+  const handleMouseMove = (dets) => {
     gsap.to(cursor, {
       css: { x: dets.clientX, y: dets.clientY },
       duration: 0.3,
     });
-  });
-  heroContent.addEventListener("mouseenter", function () {
+  };
+
+  const handleMouseEnter = () => {
     gsap.to(cursor, {
       scale: 1,
       opacity: 1,
       duration: 0.3,
     });
-  });
-  heroContent.addEventListener("mouseleave", function () {
+  };
+
+  const handleMouseLeave = () => {
     gsap.to(cursor, {
       scale: 0,
       opacity: 0,
       duration: 0.3,
     });
-  });
-}
-cursorEffect();
-function pageContentAnimation() {
-  gsap.from(".elem h2, #content-introduce-top h3 span", {
-    y: 100,
-    opacity: 0,
-    stagger: 0.1,
-    duration: 0.4,
-    scrollTrigger: {
-      trigger: "#content-introduce",
-      scroller: "#main",
-      start: "center bottom",
-      end: "center center",
-      scrub: true,
+  };
+
+  heroContent.addEventListener("mousemove", handleMouseMove);
+  heroContent.addEventListener("mouseenter", handleMouseEnter);
+  heroContent.addEventListener("mouseleave", handleMouseLeave);
+};
+
+// Page Content Animations
+const initPageContentAnimation = () => {
+  const animations = [
+    {
+      selector: ".elem h2, #content-introduce-top h3 span",
+      props: {
+        y: 100,
+        opacity: 0,
+        duration: 0.4,
+      },
+      trigger: {
+        trigger: "#content-introduce",
+        scroller: "#main",
+        start: "top 80%",
+        end: "top 50%",
+        scrub: true,
+      },
     },
-  });
-  gsap.from(".line-1", {
-    scrollTrigger: {
-      trigger: ".line-1",
-      scroller: "#main",
-      opacity: 0,
-      scrub: true,
-      start: "center bottom",
-      end: "center center",
+    {
+      selector: "#work-page-top h4, #work-page-top h2",
+      props: {
+        y: 100,
+        opacity: 0,
+        duration: 0.6,
+      },
+      trigger: {
+        trigger: "#work-page",
+        scroller: "#main",
+        start: "top 80%",
+        end: "top 50%",
+        scrub: true,
+      },
     },
-    scaleX: 0,
-    transformOrigin: "left center",
-    ease: "none",
-  });
-  gsap.from(".line-2", {
-    scrollTrigger: {
-      trigger: ".line-2",
-      scroller: "#main",
-      opacity: 0,
-      scrub: true,
-      start: "center bottom",
-      end: "center center",
+    {
+      selector: "#contact-page .topic",
+      props: {
+        x: -80,
+        opacity: 0,
+        duration: 0.8,
+      },
+      trigger: {
+        trigger: "#contact-page",
+        scroller: "#main",
+        start: "top 80%",
+        end: "top 50%",
+        scrub: true,
+      },
     },
-    scaleX: 0,
-    transformOrigin: "left center",
-    ease: "none",
-  });
-  gsap.from("#work-page-top", {
-    y: 100,
-    opacity: 0,
-    stagger: 0.1,
-    scrollTrigger: {
-      trigger: "#work-page",
-      scroller: "#main",
-      start: "top center",
-      end: "top top",
+    {
+      selector: ".contact-list .contact-item",
+      props: {
+        y: 50,
+        opacity: 0,
+        duration: 0.6,
+      },
+      trigger: {
+        trigger: "#contact-page",
+        scroller: "#main",
+        start: "top 70%",
+        end: "top 40%",
+        scrub: true,
+      },
     },
+  ];
+
+  animations.forEach(({ selector, props, trigger }) => {
+    gsap.from(selector, {
+      ...props,
+      scrollTrigger: trigger,
+    });
   });
-  gsap.from("#contact-page .topic", {
-    x: -80,
-    opacity: 0,
-    scrollTrigger: {
-      trigger: "#contact-page",
-      scroller: "#main",
-      start: "top center",
-      end: "top top",
-      scrub: true,
-    },
-  });
-  const contactBtn = document.getElementById("contactLink");
-  contactBtn.addEventListener("click", function () {
-    gsap.to(window, {
-      duration: 1,
-      scrollTo: {
-        y: "#contact-page",
-        offsetY: 0,
+
+  // Handle lines separately with forEach for individual triggers
+  const lineClasses = ['.line-1', '.line-2', '.line-3'];
+  lineClasses.forEach(lineClass => {
+    gsap.from(lineClass, {
+      scaleX: 0,
+      transformOrigin: "left center",
+      ease: "none",
+      scrollTrigger: {
+        trigger: lineClass,
+        scroller: "#main",
+        opacity: 0,
+        scrub: true,
+        start: "center bottom",
+        end: "center center",
       },
     });
   });
-}
-pageContentAnimation();
-function addBoxToWorkElements() {
-  document.addEventListener("DOMContentLoaded", function () {
-    fetch("assets/data/project.json")
-      .then((response) => response.json())
-      .then((data) => {
-        const workElements = document.getElementById("work-elements"); // ย้ายมานอก loop
-        data.forEach((item) => {
-          // Box
-          const boxLink = document.createElement("a");
-          boxLink.setAttribute("class", "box");
-          boxLink.setAttribute("href", item.link);
-          boxLink.setAttribute("target", "_blank");
-          // Badge elements
-          const techStack = document.createElement("div");
-          techStack.setAttribute("class", "techstack");
-          const techItems = item.stack;
-          techItems.forEach((tech) => {
-            // เปลี่ยนชื่อเพื่อไม่ให้สับสนกับ 'item'
-            const techItem = document.createElement("div");
-            techItem.setAttribute("class", "tech-item");
-            techItem.textContent = tech;
-            techStack.appendChild(techItem);
-          });
-          // Logo
-          const logoImg = document.createElement("img");
-          logoImg.setAttribute("src", item.logo);
-          logoImg.setAttribute("class", "logo");
-          // Image
-          const imgWrapper = document.createElement("div");
-          imgWrapper.setAttribute("class", "img-wrapper");
-          const coverImg = document.createElement("img");
-          coverImg.setAttribute("src", item.img);
-          imgWrapper.appendChild(coverImg);
-          // Video
-          const video = document.createElement("video");
-          video.setAttribute("src", item.video);
-          video.setAttribute("autoplay", "");
-          video.setAttribute("loop", "");
-          video.setAttribute("muted", "");
-          // Append
-          boxLink.appendChild(techStack);
-          boxLink.appendChild(logoImg);
-          boxLink.appendChild(imgWrapper);
-          boxLink.appendChild(video);
+};
 
-          // Append ไปยัง workElements ใน loop
-          workElements.appendChild(boxLink);
-        });
-        // GSAP
-        gsap.to("#work-elements .box", {
-          y: -80,
-          stagger: 0.15,
-          opacity: 1,
-          duration: 0.2,
-          scrollTrigger: {
-            trigger: "#work-page",
-            scroller: "#main",
-            start: "top center",
-            end: "top top",
-          },
-        });
-      })
-      .catch((error) => console.error("Error fetching JSON data:", error));
-  });
-}
-addBoxToWorkElements();
-function addContactItem() {
-  document.addEventListener("DOMContentLoaded", () => {
-    fetch("assets/data/contact.json")
-      .then((response) => response.json())
-      .then((data) => {
-        const contactContainer = document.getElementById("contact-page");
-        data.forEach((item) => {
-          const link = document.createElement("a");
-          link.setAttribute("href", item.link);
-          link.setAttribute("class", "contact-list");
-          const container = document.createElement("div");
-          container.setAttribute("class", "contact-item");
-          const h3 = document.createElement("h3");
-          h3.textContent = item.name;
-          const line = document.createElement("div");
-          line.setAttribute("class", "line-hv");
-          container.appendChild(h3);
-          container.appendChild(line);
-          link.appendChild(container);
-          contactContainer.appendChild(link);
-        });
-        // GSAP
-        gsap.from(".contact-list .contact-item", {
-          y: -80,
-          stagger: 0.15,
-          opacity: 0,
-          duration: 0.4,
-          scrollTrigger: {
-            trigger: "#contact-page",
-            scroller: "#main",
-            start: "top center",
-            end: "top top",
-            scrub: true,
-          },
-        });
+// Showcase Items
+const initShowcaseItems = async () => {
+  console.log("initShowcaseItems started for film strip effect"); // DEBUG
+  try {
+    const response = await fetch("assets/data/project.json");
+    console.log("Fetched project.json response:", response); // DEBUG
+    if (!response.ok) {
+      console.error(
+        "Failed to fetch project.json:",
+        response.status,
+        response.statusText
+      );
+      return;
+    }
+    const data = await response.json();
+    console.log("Parsed project.json data for film strip:", data); // DEBUG
+    const showcaseLinksContainer = document.getElementById("show-case"); // Container for text links
+    const imagePreviewViewport = document.getElementById(
+      "video-preview-container"
+    ); // This is the viewport
 
-        ScrollTrigger.refresh();
+    if (!showcaseLinksContainer || !imagePreviewViewport) {
+      console.error(
+        "Required containers for showcase (links or viewport) not found."
+      );
+      return;
+    }
+
+    // Clear previous content from viewport (e.g., old single image display) and create imageStrip
+    imagePreviewViewport.innerHTML = "";
+    const imageStrip = document.createElement("div");
+    imageStrip.id = "image-strip"; // For selection and styling
+    // CSS will handle display:flex, height:100% for imageStrip
+    imagePreviewViewport.appendChild(imageStrip);
+
+    data.forEach((item, index) => {
+      // Create the text link (.showcase-item)
+      const showcaseItemLink = document.createElement("div");
+      showcaseItemLink.classList.add("showcase-item");
+      showcaseItemLink.textContent = item.name;
+      showcaseItemLink.dataset.projectIndex = index; // Store index to link to the image in the strip
+      console.log(`Created showcaseItemLink for ${item.name}, index: ${index}`); // DEBUG
+      showcaseLinksContainer.appendChild(showcaseItemLink);
+
+      // Create the image and add it to the imageStrip
+      const img = document.createElement("img");
+      img.src = item.img; // Assuming item.img has the correct image path
+      img.alt = item.name; // For accessibility
+      // Styling for img (width, height, object-fit) should come from CSS, e.g., #image-strip img
+      imageStrip.appendChild(img);
+    });
+    console.log("initShowcaseItems for film strip finished successfully"); // DEBUG
+  } catch (error) {
+    console.error("Error in initShowcaseItems (film strip):", error); // DEBUG
+  }
+};
+
+// Showcase Hover Image Effect
+const initShowcaseHoverImage = (locoScrollInstance) => {
+  console.log("initShowcaseHoverImage started for film strip"); // DEBUG
+  const showcaseLinksContainer = document.getElementById("show-case");
+  const imagePreviewViewport = document.getElementById(
+    "video-preview-container"
+  );
+  const imageStrip = document.getElementById("image-strip"); // The strip containing all images
+
+  if (!showcaseLinksContainer || !imagePreviewViewport || !imageStrip) {
+    console.error(
+      "Required elements for showcase hover (film strip) not found."
+    );
+    return;
+  }
+
+  // Mouse move is still used for the viewport container itself, not for individual images
+  let mouseX = 0,
+    mouseY = 0;
+  document.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    if (imagePreviewViewport.classList.contains("visible")) {
+      gsap.to(imagePreviewViewport, {
+        // Animate the viewport container
+        x: mouseX + 20,
+        y: mouseY - imagePreviewViewport.offsetHeight / 2,
+        duration: 0.3,
+        ease: "power2.out",
       });
+    }
   });
-}
-addContactItem();
 
-// Loader
-let tl = gsap.timeline();
-tl.from("#loader h3", {
-  x: 20,
-  opacity: 0,
-  duration: 1,
-  stagger: 0.1,
-});
-tl.to("#loader h3", {
-  opacity: 0,
-  x: -20,
-  stagger: 0.1,
-});
-tl.to("#loader", {
-  opacity: 0,
-});
-tl.to("#loader", {
-  display: "none",
-});
-// Hero
-tl.from("#hero-content h1 span", {
-  y: 100,
-  opacity: 0,
-  stagger: 0.2,
-  duration: 0.5,
+  showcaseLinksContainer.addEventListener("mouseenter", () => {
+    // Show the viewport when mouse enters the links area
+    if (!imagePreviewViewport.classList.contains("visible")) {
+      console.log("Making image preview viewport visible for film strip."); // DEBUG
+      imagePreviewViewport.classList.add("visible");
+      gsap.to(imagePreviewViewport, { opacity: 1, duration: 0.3 });
+    }
+  });
+
+  showcaseLinksContainer.addEventListener("mouseleave", (e) => {
+    if (
+      !showcaseLinksContainer.contains(e.relatedTarget) &&
+      e.relatedTarget !== imagePreviewViewport
+    ) {
+      console.log("Fading out image preview viewport (film strip)."); // DEBUG
+      if (imagePreviewViewport.classList.contains("visible")) {
+        gsap.to(imagePreviewViewport, {
+          opacity: 0,
+          duration: 0.15,
+          onComplete: () => {
+            console.log(
+              "Image preview viewport faded out, removing visible class."
+            ); // DEBUG
+            imagePreviewViewport.classList.remove("visible");
+            // No need to clear src or currentImageSrc as we are moving the strip
+          },
+        });
+      }
+    }
+  });
+
+  // Add event listeners to individual .showcase-item links
+  setTimeout(() => {
+    const showcaseItemLinks =
+      showcaseLinksContainer.querySelectorAll(".showcase-item");
+    console.log(
+      "Found showcase item links for film strip events:",
+      showcaseItemLinks.length
+    ); // DEBUG
+
+    showcaseItemLinks.forEach((itemLink) => {
+      itemLink.addEventListener("mouseenter", () => {
+        const projectIndex = parseInt(itemLink.dataset.projectIndex, 10);
+        console.log(
+          "Showcase item link mouseenter, project index:",
+          projectIndex
+        ); // DEBUG
+
+        if (isNaN(projectIndex)) {
+          console.warn(
+            "Invalid projectIndex found in dataset for item:",
+            itemLink.textContent
+          ); // DEBUG
+          return;
+        }
+
+        // Calculate the translation needed to show the correct image
+        // Use the actual image width instead of viewport width for more accurate positioning
+        const imageWidth = imagePreviewViewport.offsetWidth; // This should match CSS: 20vw
+        const targetX = -(projectIndex * imageWidth);
+
+        console.log(
+          `Image width: ${imageWidth}, Project index: ${projectIndex}, Target X: ${targetX}`
+        ); // DEBUG
+
+        gsap.to(imageStrip, {
+          x: targetX,
+          duration: 0.5, // Adjust duration as needed
+          ease: "power3.out", // Adjust ease as needed
+        });
+
+        // Ensure viewport is visible (might have been hidden by mouseleave)
+        if (!imagePreviewViewport.classList.contains("visible")) {
+          imagePreviewViewport.classList.add("visible");
+          gsap.set(imagePreviewViewport, { opacity: 1 }); // Set directly, no fade in if it was hidden quickly
+          gsap.to(imagePreviewViewport, {
+            // Still update position
+            x: mouseX + 20,
+            y: mouseY - imagePreviewViewport.offsetHeight / 2,
+            duration: 0.1, // Quick position update
+          });
+        }
+      });
+    });
+  }, 500); // Delay to ensure items are loaded
+
+  console.log("initShowcaseHoverImage for film strip finished"); // DEBUG
+};
+
+// Contact Items
+const initContactItems = async () => {
+  try {
+    const response = await fetch("assets/data/contact.json");
+    const data = await response.json();
+    const contactContainer = document.getElementById("contact-page");
+
+    data.forEach((item) => {
+      const contactElement = createContactElement(item);
+      contactContainer.appendChild(contactElement);
+    });
+
+    // GSAP Animation is now handled in initPageContentAnimation()
+    // Remove duplicate animation code here
+    
+    ScrollTrigger.refresh();
+  } catch (error) {
+    console.error("Error fetching contact data:", error);
+  }
+};
+
+const createContactElement = (item) => {
+  const link = document.createElement("a");
+  link.setAttribute("href", item.link);
+  link.setAttribute("class", "contact-list");
+
+  const container = document.createElement("div");
+  container.setAttribute("class", "contact-item");
+
+  const h3 = document.createElement("h3");
+  h3.textContent = item.name;
+
+  const line = document.createElement("div");
+  line.setAttribute("class", "line-hv");
+
+  container.append(h3, line);
+  link.appendChild(container);
+  return link;
+};
+
+// Loader Animation
+const initLoaderAnimation = () => {
+  const tl = gsap.timeline();
+
+  tl.from("#loader h3", {
+    x: 20,
+    opacity: 0,
+    duration: 1,
+    stagger: 0.1,
+  })
+    .to("#loader h3", {
+      opacity: 0,
+      x: -20,
+      stagger: 0.1,
+    })
+    .to("#loader", {
+      opacity: 0,
+    })
+    .to("#loader", {
+      display: "none",
+    })
+    .from("#hero-content h1 span", {
+      y: 100,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 0.5,
+    });
+};
+
+// Initialize all components
+document.addEventListener("DOMContentLoaded", async () => {
+  // Initialize Locomotive Scroll first, as other animations depend on it
+  const locoScrollInstance = initLocomotiveScroll();
+
+  // Initialize other components
+  initCursorEffect();
+  initLoaderAnimation();
+
+  // Wait for showcase items to be created, then setup hover effect
+  await initShowcaseItems();
+  initShowcaseHoverImage(locoScrollInstance); // Pass the instance to avoid re-initialization
+
+  // Wait for contact items to be created
+  await initContactItems();
+
+  // Initialize page content animations after everything is ready
+  initPageContentAnimation();
+
+  // Final ScrollTrigger refresh to ensure everything works
+  ScrollTrigger.refresh();
 });

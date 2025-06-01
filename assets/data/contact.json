@@ -1,14 +1,14 @@
 [
   {
-    "name": "instagram",
-    "link": "https://www.instagram.com/sry_tn/"
-  },
-  {
     "name": "linkedin",
     "link": "https://www.linkedin.com/in/sry-tn/"
   },
   {
-    "name": "github",
+    "name": "github", 
     "link": "https://github.com/sryongkh"
+  },
+  {
+    "name": "email",
+    "link": "mailto:sryongkh@gmail.com"
   }
 ]
