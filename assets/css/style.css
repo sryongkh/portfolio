@@ -96,13 +96,18 @@ a {
   display: flex;
   gap: 12px;
   padding-bottom: 4rem;
+  position: relative;
+  z-index: 11;
+  color: var(--color-white);
 }
 
 #hero-content h1 span {
   display: inline-block;
-  font-family: "Headerline", sans-serif;
+  font-family: "Headerline", Arial, sans-serif;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: default;
+  color: var(--color-white);
+  font-size: inherit;
 }
 
 #hero-content h1 span:hover {

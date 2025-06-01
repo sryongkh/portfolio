@@ -34,16 +34,6 @@ const initLocomotiveScroll = () => {
   ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
   ScrollTrigger.refresh();
 
-  // Contact Link Scroll
-  document.addEventListener("DOMContentLoaded", () => {
-    document
-      .querySelector("#contactLink")
-      .addEventListener("click", (event) => {
-        event.preventDefault();
-        locoScroll.scrollTo(document.querySelector("#contact-page"));
-      });
-  });
-
   return locoScroll;
 };
 
@@ -424,6 +414,42 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Initialize Locomotive Scroll first, as other animations depend on it
   const locoScrollInstance = initLocomotiveScroll();
 
+  // Setup improved contact link handler
+  const contactLink = document.querySelector("#contactLink");
+  if (contactLink) {
+    contactLink.addEventListener("click", (event) => {
+      event.preventDefault();
+      console.log('Contact link clicked'); // Debug
+      
+      const contactSection = document.querySelector("#contact-page");
+      if (contactSection) {
+        console.log('Contact section found, scrolling...'); // Debug
+        
+        // Use locomotive scroll's scrollTo method with correct API
+        locoScrollInstance.scrollTo(
+          contactSection,     // target
+          -100,              // offset from top
+          1500,              // duration in ms
+          [0.25, 0.0, 0.35, 1.0], // easing array
+          false,             // disableLerp
+          function() {       // callback
+            console.log('Locomotive scroll completed'); // Debug
+            // Refresh ScrollTrigger after scroll completes
+            setTimeout(() => {
+              ScrollTrigger.refresh();
+              console.log('ScrollTrigger refreshed after contact scroll');
+            }, 100);
+          }
+        );
+        
+      } else {
+        console.error('Contact section not found!');
+      }
+    });
+  } else {
+    console.error('Contact link not found!');
+  }
+
   // Initialize other components
   initCursorEffect();
   initLoaderAnimation();
@@ -439,5 +465,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initPageContentAnimation();
 
   // Final ScrollTrigger refresh to ensure everything works
-  ScrollTrigger.refresh();
+  setTimeout(() => {
+    ScrollTrigger.refresh();
+  }, 500);
 });
