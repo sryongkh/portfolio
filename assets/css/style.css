@@ -90,7 +90,7 @@ a {
 
 #hero-content h1 {
   font-family: "Headerline", sans-serif;
-  font-size: 24vw;
+  font-size: 20vw;
   font-weight: 100;
   line-height: 24vw;
   display: flex;
@@ -108,13 +108,15 @@ a {
   cursor: default;
   color: var(--color-white);
   font-size: inherit;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 #hero-content h1 span:hover {
   transform: scale(1.2) rotateY(360deg);
-  color: var(--color-orange);
+  color: var(--color-white);
   text-shadow: 0 0 20px var(--color-orange);
-  filter: drop-shadow(0 10px 20px rgba(255, 145, 73, 0.4));
+  filter: drop-shadow(0 10px 20px rgba(255, 255, 255, 0.4));
 }
 
 #hero-content h1 span:nth-child(odd):hover {

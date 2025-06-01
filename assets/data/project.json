@@ -4,23 +4,20 @@
     "name": "realm",
     "logo": "assets/logo/realm.svg",
     "stack": ["Wordpress", "HTML", "CSS", "JavaScript", "Figma"],
-    "img": "assets/img/realm-cover.png",
-    "video": "assets/video/realm.mp4"
+    "img": "assets/img/realm-cover.png"
   },
   {
     "link": "https://blueventureact.com/",
     "name": "blueventure actuarial",
     "logo": "assets/logo/blueventure.webp",
     "stack": ["Wordpress", "HTML", "CSS", "JavaScript", "Figma"],
-    "img": "assets/img/blueventure-cover.png",
-    "video": "assets/video/blueventure.mp4"
+    "img": "assets/img/blueventure-cover.png"
   },
   {
     "link": "https://cybericestudio.com/ci1/",
     "name": "CI-1",
     "logo": "assets/logo/ci1-logo.webp",
     "stack": ["Astro.js", "HTML", "CSS", "JavaScript"],
-    "img": "assets/img/ci1-cover.png",
-    "video": "assets/video/ci1.mp4"
+    "img": "assets/img/ci1-cover.png"
   }
 ]

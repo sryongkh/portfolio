@@ -384,6 +384,12 @@ const createContactElement = (item) => {
 const initLoaderAnimation = () => {
   const tl = gsap.timeline();
 
+  // First, set h1 spans to be invisible initially
+  gsap.set("#hero-content h1 span", {
+    y: 100,
+    opacity: 0
+  });
+
   tl.from("#loader h3", {
     x: 20,
     opacity: 0,
@@ -401,11 +407,12 @@ const initLoaderAnimation = () => {
     .to("#loader", {
       display: "none",
     })
-    .from("#hero-content h1 span", {
-      y: 100,
-      opacity: 0,
+    .to("#hero-content h1 span", {
+      y: 0,
+      opacity: 1,
       stagger: 0.2,
       duration: 0.5,
+      ease: "back.out(1.7)"
     });
 };
 
