@@ -89,6 +89,36 @@ const initPageContentAnimation = () => {
       },
     },
     {
+      selector: "#skills-page-top h4, #skills-page-top h2",
+      props: {
+        y: 100,
+        opacity: 0,
+        duration: 0.6,
+      },
+      trigger: {
+        trigger: "#skills-page",
+        scroller: "#main",
+        start: "top 80%",
+        end: "top 50%",
+        scrub: true,
+      },
+    },
+    {
+      selector: ".skills-category h3",
+      props: {
+        x: -50,
+        opacity: 0,
+        duration: 0.8,
+      },
+      trigger: {
+        trigger: "#skills-page",
+        scroller: "#main",
+        start: "top 70%",
+        end: "top 40%",
+        scrub: true,
+      },
+    },
+    {
       selector: "#work-page-top h4, #work-page-top h2",
       props: {
         y: 100,
@@ -143,7 +173,7 @@ const initPageContentAnimation = () => {
   });
 
   // Handle lines separately with forEach for individual triggers
-  const lineClasses = ['.line-1', '.line-2', '.line-3'];
+  const lineClasses = ['.line-1', '.line-2', '.line-3', '.line-4'];
   lineClasses.forEach(lineClass => {
     gsap.from(lineClass, {
       scaleX: 0,
@@ -159,6 +189,59 @@ const initPageContentAnimation = () => {
       },
     });
   });
+};
+
+// Skills Animation
+const initSkillsAnimation = () => {
+  console.log("Initializing GSAP skills animation with ScrollTrigger");
+  
+  const skillItems = document.querySelectorAll(".skill-item");
+  console.log("Found skill items:", skillItems.length);
+  
+  if (skillItems.length === 0) {
+    console.warn("No skill items found");
+    return;
+  }
+
+  // Set initial state for all skill items
+  gsap.set(skillItems, {
+    x: -300,
+    rotation: 0,
+    opacity: 0
+  });
+
+  // Create ScrollTrigger animation for each skill category
+  const skillCategories = document.querySelectorAll(".skills-category");
+  
+  skillCategories.forEach((category, categoryIndex) => {
+    const categorySkillItems = category.querySelectorAll(".skill-item");
+    
+    if (categorySkillItems.length > 0) {
+      // Create timeline for this category
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: category,
+          scroller: "#main",
+          start: "top 80%",
+          end: "top 50%",
+          toggleActions: "play none none reverse",
+          markers: false // Set to true for debugging
+        }
+      });
+
+      // Animate each skill item in this category without stagger
+      categorySkillItems.forEach((item, index) => {
+        tl.to(item, {
+          x: 0,
+          rotation: -720, // Two full rotations clockwise
+          opacity: 1,
+          ease: "power3.out"
+        }, 0); // No stagger delay - all start at the same time
+      });
+    }
+  });
+  
+  console.log("Skills animation setup complete");
 };
 
 // Showcase Items
@@ -470,6 +553,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Initialize page content animations after everything is ready
   initPageContentAnimation();
+
+  // Initialize skills bar animations
+  setTimeout(() => {
+    initSkillsAnimation();
+  }, 1000); // Wait 1 second for everything to be ready
 
   // Final ScrollTrigger refresh to ensure everything works
   setTimeout(() => {
