@@ -159,37 +159,141 @@ const initPageContentAnimation = () => {
   });
 };
 
-// Skills Animation
-const initSkillsAnimation = () => {
+// Luxury Skills Animation
+const initLuxurySkillsAnimation = () => {
   const skillItems = document.querySelectorAll(".skill-item");
   if (skillItems.length === 0) return;
 
-  gsap.set(skillItems, { x: -300, rotation: 0, opacity: 0 });
+  // Reset all skill items to initial state
+  skillItems.forEach(item => {
+    item.classList.remove('luxury-reveal');
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(100px) scale(0.5) rotateY(-180deg)';
+    item.style.filter = 'blur(10px)';
+  });
 
   const skillCategories = document.querySelectorAll(".skills-category");
-  skillCategories.forEach(category => {
+  
+  skillCategories.forEach((category, categoryIndex) => {
     const categorySkillItems = category.querySelectorAll(".skill-item");
     if (categorySkillItems.length > 0) {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: category,
-          scroller: "#main",
-          start: "top 80%",
-          end: "top 50%",
-          toggleActions: "play none none reverse",
-        }
+      
+      // Create intersection observer for each category
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Trigger luxury animation for this category
+            categorySkillItems.forEach((item, itemIndex) => {
+              setTimeout(() => {
+                // Add luxury reveal class with staggered timing
+                item.classList.add('luxury-reveal');
+                
+                // Add shimmer effect after main animation
+                setTimeout(() => {
+                  item.style.setProperty('--shimmer-delay', `${itemIndex * 0.1}s`);
+                }, 800);
+                
+                // Add floating particles effect
+                createLuxuryParticles(item);
+                
+              }, itemIndex * 200 + categoryIndex * 100); // Staggered by item and category
+            });
+            
+            // Unobserve after animation starts
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.3,
+        rootMargin: '0px 0px -100px 0px'
       });
 
-      categorySkillItems.forEach(item => {
-        tl.to(item, {
-          x: 0,
-          rotation: -720,
-          opacity: 1,
-          ease: "power3.out"
-        }, 0);
-      });
+      observer.observe(category);
     }
   });
+};
+
+// Create luxury particles for skill items
+const createLuxuryParticles = (skillItem) => {
+  const rect = skillItem.getBoundingClientRect();
+  const particleCount = 6;
+  const colors = [
+    'rgba(255, 145, 73, 0.8)',
+    'rgba(255, 255, 255, 0.9)',
+    'rgba(187, 251, 255, 0.7)',
+    'rgba(78, 113, 255, 0.6)'
+  ];
+
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const size = Math.random() * 6 + 3;
+    const delay = Math.random() * 0.5;
+    
+    particle.style.cssText = `
+      position: fixed;
+      width: ${size}px;
+      height: ${size}px;
+      background: ${color};
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1000;
+      left: ${rect.left + rect.width / 2}px;
+      top: ${rect.top + rect.height / 2}px;
+      opacity: 0;
+      animation: luxuryParticleFloat ${2 + Math.random()}s ease-out ${delay}s forwards;
+      box-shadow: 0 0 ${size * 2}px ${color};
+    `;
+    
+    document.body.appendChild(particle);
+    
+    setTimeout(() => {
+      if (particle.parentNode) {
+        particle.remove();
+      }
+    }, 3000);
+  }
+  
+  // Add particle animation if not exists
+  if (!document.querySelector('#luxury-particle-style')) {
+    const style = document.createElement('style');
+    style.id = 'luxury-particle-style';
+    style.textContent = `
+      @keyframes luxuryParticleFloat {
+        0% {
+          opacity: 0;
+          transform: translate(0, 0) scale(0);
+        }
+        20% {
+          opacity: 1;
+          transform: translate(${Math.random() * 60 - 30}px, ${Math.random() * 60 - 30}px) scale(1);
+        }
+        80% {
+          opacity: 0.8;
+          transform: translate(${Math.random() * 120 - 60}px, ${Math.random() * 120 - 60}px) scale(0.8);
+        }
+        100% {
+          opacity: 0;
+          transform: translate(${Math.random() * 180 - 90}px, ${Math.random() * 180 - 90}px) scale(0);
+        }
+      }
+      
+      @keyframes luxuryGlow {
+        0%, 100% {
+          box-shadow: 0 0 20px rgba(255, 145, 73, 0.3);
+        }
+        50% {
+          box-shadow: 0 0 40px rgba(255, 145, 73, 0.6), 0 0 60px rgba(255, 145, 73, 0.4);
+        }
+      }
+      
+      .skill-item.luxury-reveal {
+        animation: luxurySkillReveal 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards,
+                   luxuryGlow 3s ease-in-out infinite 2s;
+      }
+    `;
+    document.head.appendChild(style);
+  }
 };
 
 // Showcase Items
@@ -981,7 +1085,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Initialize skills bar animations
   setTimeout(() => {
-    initSkillsAnimation();
+    initLuxurySkillsAnimation();
   }, 1000); // Wait 1 second for everything to be ready
 
   // Final ScrollTrigger refresh to ensure everything works

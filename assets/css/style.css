@@ -717,6 +717,7 @@ nav h3, nav a {
   display: flex;
   flex-direction: column;
   background: var(--color-coffee);
+  overflow: hidden;
 }
 
 #skills-page-top {
@@ -810,10 +811,87 @@ nav h3, nav a {
   height: 10vw;
   flex-shrink: 0;
   
-  /* Remove forced CSS animation - let GSAP handle it */
-  /* Initial state will be set by GSAP */
+  /* Luxury Animation Initial State */
+  opacity: 0;
+  transform: translateY(100px) scale(0.5) rotateY(-180deg);
+  filter: blur(10px);
+  
+  /* Luxury Glow Effects */
+  box-shadow: 
+    0 0 0 rgba(255, 255, 255, 0),
+    0 0 0 rgba(255, 145, 73, 0),
+    inset 0 0 0 rgba(255, 255, 255, 0);
 }
 
+/* Luxury Animation Keyframes */
+@keyframes luxurySkillReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(100px) scale(0.5) rotateY(-180deg);
+    filter: blur(10px);
+    box-shadow: 
+      0 0 0 rgba(255, 255, 255, 0),
+      0 0 0 rgba(255, 145, 73, 0),
+      inset 0 0 0 rgba(255, 255, 255, 0);
+  }
+  
+  30% {
+    opacity: 0.3;
+    transform: translateY(50px) scale(0.7) rotateY(-90deg);
+    filter: blur(5px);
+    box-shadow: 
+      0 10px 20px rgba(255, 255, 255, 0.1),
+      0 0 20px rgba(255, 145, 73, 0.2),
+      inset 0 0 20px rgba(255, 255, 255, 0.1);
+  }
+  
+  60% {
+    opacity: 0.7;
+    transform: translateY(10px) scale(0.9) rotateY(-30deg);
+    filter: blur(2px);
+    box-shadow: 
+      0 20px 40px rgba(255, 255, 255, 0.2),
+      0 0 40px rgba(255, 145, 73, 0.4),
+      inset 0 0 40px rgba(255, 255, 255, 0.2);
+  }
+  
+  85% {
+    opacity: 0.9;
+    transform: translateY(-5px) scale(1.05) rotateY(10deg);
+    filter: blur(0px);
+    box-shadow: 
+      0 30px 60px rgba(255, 255, 255, 0.3),
+      0 0 60px rgba(255, 145, 73, 0.6),
+      inset 0 0 60px rgba(255, 255, 255, 0.3);
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotateY(0deg);
+    filter: blur(0px);
+    box-shadow: 
+      0 20px 40px rgba(255, 255, 255, 0.15),
+      0 0 30px rgba(255, 145, 73, 0.3),
+      inset 0 0 30px rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Shimmer effect for luxury feel */
+@keyframes luxuryShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Applied luxury animation class */
+.skill-item.luxury-reveal {
+  animation: luxurySkillReveal 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Shimmer overlay for extra luxury effect */
 .skill-item::before {
   content: '';
   position: absolute;
@@ -821,20 +899,20 @@ nav h3, nav a {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 255, 255, 0.4), 
+    transparent
+  );
   transition: var(--transition-hv);
+  z-index: 1;
 }
 
-.skill-item:hover::before {
-  left: 100%;
+.skill-item.luxury-reveal::before {
+  animation: luxuryShimmer 2s ease-in-out 0.5s;
 }
 
-.skill-item:hover {
-  transform: translateY(-10px) rotate(15deg) scale(1.05);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-  border-color: var(--color-white);
-  background: rgba(255, 255, 255, 0.9);
-}
+/* Remove all hover effects */
 
 .skill-icon {
   width: 3.5vw;
@@ -847,44 +925,71 @@ nav h3, nav a {
   flex-shrink: 0;
   transition: var(--transition-hv);
   margin-bottom: 0;
+  position: relative;
+  z-index: 2;
+  
+  /* Add luxury glow to icon */
+  box-shadow: 
+    0 0 20px rgba(255, 145, 73, 0.3),
+    inset 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
-/* Rainbow colors for skill icons */
-.skill-item:nth-child(1) .skill-icon { background: #FF6B6B; } /* Red */
-.skill-item:nth-child(2) .skill-icon { background: #FF8E53; } /* Orange */
-.skill-item:nth-child(3) .skill-icon { background: #FFD93D; } /* Yellow */
-.skill-item:nth-child(4) .skill-icon { background: #6BCF7F; } /* Green */
-.skill-item:nth-child(5) .skill-icon { background: #4ECDC4; } /* Teal */
-.skill-item:nth-child(6) .skill-icon { background: #45B7D1; } /* Blue */
-.skill-item:nth-child(7) .skill-icon { background: #96CEB4; } /* Light Green */
-.skill-item:nth-child(8) .skill-icon { background: #FFEAA7; } /* Light Yellow */
-.skill-item:nth-child(9) .skill-icon { background: #DDA0DD; } /* Plum */
+/* Rainbow colors for skill icons with enhanced luxury effects */
+.skill-item:nth-child(1) .skill-icon { 
+  background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+  box-shadow: 0 0 30px rgba(255, 107, 107, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+.skill-item:nth-child(2) .skill-icon { 
+  background: linear-gradient(135deg, #FF8E53, #FFB383);
+  box-shadow: 0 0 30px rgba(255, 142, 83, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+.skill-item:nth-child(3) .skill-icon { 
+  background: linear-gradient(135deg, #FFD93D, #FFE66D);
+  box-shadow: 0 0 30px rgba(255, 217, 61, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+.skill-item:nth-child(4) .skill-icon { 
+  background: linear-gradient(135deg, #6BCF7F, #9BE6A8);
+  box-shadow: 0 0 30px rgba(107, 207, 127, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+.skill-item:nth-child(5) .skill-icon { 
+  background: linear-gradient(135deg, #4ECDC4, #7BEBE0);
+  box-shadow: 0 0 30px rgba(78, 205, 196, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+.skill-item:nth-child(6) .skill-icon { 
+  background: linear-gradient(135deg, #45B7D1, #74D0ED);
+  box-shadow: 0 0 30px rgba(69, 183, 209, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+.skill-item:nth-child(7) .skill-icon { 
+  background: linear-gradient(135deg, #96CEB4, #C4E3D0);
+  box-shadow: 0 0 30px rgba(150, 206, 180, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+.skill-item:nth-child(8) .skill-icon { 
+  background: linear-gradient(135deg, #FFEAA7, #FFF2C7);
+  box-shadow: 0 0 30px rgba(255, 234, 167, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
+.skill-item:nth-child(9) .skill-icon { 
+  background: linear-gradient(135deg, #DDA0DD, #ECC5EC);
+  box-shadow: 0 0 30px rgba(221, 160, 221, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.3);
+}
 
-/* Rainbow hover effects */
-.skill-item:nth-child(1):hover .skill-icon { background: #FF5252; } /* Darker Red */
-.skill-item:nth-child(2):hover .skill-icon { background: #FF7043; } /* Darker Orange */
-.skill-item:nth-child(3):hover .skill-icon { background: #FFCA28; } /* Darker Yellow */
-.skill-item:nth-child(4):hover .skill-icon { background: #66BB6A; } /* Darker Green */
-.skill-item:nth-child(5):hover .skill-icon { background: #26A69A; } /* Darker Teal */
-.skill-item:nth-child(6):hover .skill-icon { background: #42A5F5; } /* Darker Blue */
-.skill-item:nth-child(7):hover .skill-icon { background: #81C784; } /* Darker Light Green */
-.skill-item:nth-child(8):hover .skill-icon { background: #FFD54F; } /* Darker Light Yellow */
-.skill-item:nth-child(9):hover .skill-icon { background: #BA68C8; } /* Darker Plum */
+/* Enhanced hover effects for icons */
+.skill-item:hover .skill-icon {
+  transform: rotate(360deg) scale(1.3);
+  filter: drop-shadow(0 0 20px rgba(255, 145, 73, 0.6));
+}
 
 .skill-icon svg {
   width: 60%;
   height: 60%;
   fill: var(--color-white);
   transition: var(--transition-hv);
-}
-
-.skill-item:hover .skill-icon {
-  transform: rotate(720deg) scale(1.2);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .skill-item:hover .skill-icon svg {
   fill: var(--color-white);
   transform: scale(1.1);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 .skill-content {
@@ -893,6 +998,8 @@ nav h3, nav a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .skill-content h4 {
@@ -902,6 +1009,14 @@ nav h3, nav a {
   margin: 0;
   text-align: center;
   line-height: 1.1;
+  transition: var(--transition-hv);
+}
+
+.skill-item:hover .skill-content h4 {
+  color: var(--color-orange);
+  font-weight: 600;
+  transform: scale(1.05);
+  text-shadow: 0 2px 4px rgba(255, 145, 73, 0.3);
 }
 
 /* Skills Responsive Design */
@@ -1403,16 +1518,15 @@ img, video {
 body::before {
   content: '© 2024 Sirinya Portfolio - All Rights Reserved';
   position: fixed;
-  top: 50%;
+  bottom: 0;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(-45deg);
+  transform: translate(-50%, 0);
   font-size: 3vw;
   color: rgba(0, 0, 0, 0.03);
-  font-weight: bold;
+  font-weight: lighter;
   z-index: 9999;
   pointer-events: none;
   white-space: nowrap;
-  font-family: Arial, sans-serif;
 }
 
 /* Prevent iframe embedding */
