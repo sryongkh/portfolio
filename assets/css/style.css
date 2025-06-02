@@ -3,6 +3,7 @@
   font-family: NBInternational;
   src: url("../fonts/NBInternationalProBoo.ttf");
 }
+
 @font-face {
   font-family: Headerline;
   src: url("../fonts/Headline.ttf");
@@ -630,8 +631,7 @@ nav h3, nav a {
 #video-preview-container {
   position: fixed;
   width: 20vw;
-  height: auto;
-  aspect-ratio: 16 / 9;
+  height: 12vw;
   background-color: var(--color-black);
   border-radius: 0.5rem;
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
@@ -653,6 +653,7 @@ nav h3, nav a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
 }
 
@@ -671,6 +672,7 @@ nav h3, nav a {
   
   #video-preview-container {
     width: 40vw;
+    height: 24vw;
   }
 }
 
@@ -678,23 +680,25 @@ nav h3, nav a {
 #image-strip {
   display: flex;
   height: 100%;
-  width: max-content; /* Let the strip expand to contain all images */
+  width: max-content;
   will-change: transform;
-  transition: none; /* Let GSAP handle the animation */
+  transition: none;
 }
 
 #image-strip img {
-  width: auto;
-  height: 100%;
+  width: 20vw;
+  height: 12vw;
   object-fit: cover;
+  object-position: center;
   flex-shrink: 0;
-  transition: var(--transition);
+  display: block;
 }
 
 /* Responsive adjustments for image strip */
 @media (max-width: 768.99px) {
   #image-strip img {
-    height: 80%;
+    width: 40vw;
+    height: 24vw;
   }
 }
 
@@ -981,3 +985,68 @@ nav h3, nav a {
     height: 60%;
   }
 }
+
+/* ==========================================================================
+   GEOMETRIC BACKGROUND SHAPES ONLY
+   ========================================================================== */
+
+/* Interactive Background Elements */
+.background-shapes {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-shape {
+  position: absolute;
+  opacity: 0.05;
+  animation: rotate 20s linear infinite;
+}
+
+.bg-shape.circle {
+  border-radius: 50%;
+  background: linear-gradient(45deg, var(--color-orange), var(--color-purple));
+}
+
+.bg-shape.triangle {
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 87px solid var(--color-cyan);
+  opacity: 0.03;
+}
+
+.bg-shape.square {
+  background: linear-gradient(135deg, var(--color-blue), var(--color-sky-blue));
+  transform-origin: center;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive Geometric Shapes */
+@media (max-width: 768px) {
+  .bg-shape {
+    opacity: 0.03; /* Reduce opacity on mobile */
+  }
+}
+
+@media (max-width: 425px) {
+  .bg-shape {
+    display: none; /* Hide geometric shapes on small mobile for performance */
+  }
+}
+

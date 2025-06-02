@@ -9,7 +9,6 @@ const initLocomotiveScroll = () => {
     smartphone: { smooth: true },
   });
 
-  // ScrollTrigger Configuration
   locoScroll.on("scroll", ScrollTrigger.update);
   ScrollTrigger.scrollerProxy("#main", {
     scrollTop(value) {
@@ -25,12 +24,9 @@ const initLocomotiveScroll = () => {
         height: window.innerHeight,
       };
     },
-    pinType: document.querySelector("#main").style.transform
-      ? "transform"
-      : "fixed",
+    pinType: document.querySelector("#main").style.transform ? "transform" : "fixed",
   });
 
-  // Event Listeners
   ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
   ScrollTrigger.refresh();
 
@@ -75,11 +71,7 @@ const initPageContentAnimation = () => {
   const animations = [
     {
       selector: ".elem h2, #content-introduce-top h3 span",
-      props: {
-        y: 100,
-        opacity: 0,
-        duration: 0.4,
-      },
+      props: { y: 100, opacity: 0, duration: 0.4 },
       trigger: {
         trigger: "#content-introduce",
         scroller: "#main",
@@ -90,11 +82,7 @@ const initPageContentAnimation = () => {
     },
     {
       selector: "#skills-page-top h4, #skills-page-top h2",
-      props: {
-        y: 100,
-        opacity: 0,
-        duration: 0.6,
-      },
+      props: { y: 100, opacity: 0, duration: 0.6 },
       trigger: {
         trigger: "#skills-page",
         scroller: "#main",
@@ -105,11 +93,7 @@ const initPageContentAnimation = () => {
     },
     {
       selector: ".skills-category h3",
-      props: {
-        x: -50,
-        opacity: 0,
-        duration: 0.8,
-      },
+      props: { x: -50, opacity: 0, duration: 0.8 },
       trigger: {
         trigger: "#skills-page",
         scroller: "#main",
@@ -120,11 +104,7 @@ const initPageContentAnimation = () => {
     },
     {
       selector: "#work-page-top h4, #work-page-top h2",
-      props: {
-        y: 100,
-        opacity: 0,
-        duration: 0.6,
-      },
+      props: { y: 100, opacity: 0, duration: 0.6 },
       trigger: {
         trigger: "#work-page",
         scroller: "#main",
@@ -135,11 +115,7 @@ const initPageContentAnimation = () => {
     },
     {
       selector: "#contact-page .topic",
-      props: {
-        x: -80,
-        opacity: 0,
-        duration: 0.8,
-      },
+      props: { x: -80, opacity: 0, duration: 0.8 },
       trigger: {
         trigger: "#contact-page",
         scroller: "#main",
@@ -150,11 +126,7 @@ const initPageContentAnimation = () => {
     },
     {
       selector: ".contact-list .contact-item",
-      props: {
-        y: 50,
-        opacity: 0,
-        duration: 0.6,
-      },
+      props: { y: 50, opacity: 0, duration: 0.6 },
       trigger: {
         trigger: "#contact-page",
         scroller: "#main",
@@ -166,13 +138,9 @@ const initPageContentAnimation = () => {
   ];
 
   animations.forEach(({ selector, props, trigger }) => {
-    gsap.from(selector, {
-      ...props,
-      scrollTrigger: trigger,
-    });
+    gsap.from(selector, { ...props, scrollTrigger: trigger });
   });
 
-  // Handle lines separately with forEach for individual triggers
   const lineClasses = ['.line-1', '.line-2', '.line-3', '.line-4'];
   lineClasses.forEach(lineClass => {
     gsap.from(lineClass, {
@@ -193,31 +161,15 @@ const initPageContentAnimation = () => {
 
 // Skills Animation
 const initSkillsAnimation = () => {
-  console.log("Initializing GSAP skills animation with ScrollTrigger");
-  
   const skillItems = document.querySelectorAll(".skill-item");
-  console.log("Found skill items:", skillItems.length);
-  
-  if (skillItems.length === 0) {
-    console.warn("No skill items found");
-    return;
-  }
+  if (skillItems.length === 0) return;
 
-  // Set initial state for all skill items
-  gsap.set(skillItems, {
-    x: -300,
-    rotation: 0,
-    opacity: 0
-  });
+  gsap.set(skillItems, { x: -300, rotation: 0, opacity: 0 });
 
-  // Create ScrollTrigger animation for each skill category
   const skillCategories = document.querySelectorAll(".skills-category");
-  
-  skillCategories.forEach((category, categoryIndex) => {
+  skillCategories.forEach(category => {
     const categorySkillItems = category.querySelectorAll(".skill-item");
-    
     if (categorySkillItems.length > 0) {
-      // Create timeline for this category
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: category,
@@ -225,107 +177,69 @@ const initSkillsAnimation = () => {
           start: "top 80%",
           end: "top 50%",
           toggleActions: "play none none reverse",
-          markers: false // Set to true for debugging
         }
       });
 
-      // Animate each skill item in this category without stagger
-      categorySkillItems.forEach((item, index) => {
+      categorySkillItems.forEach(item => {
         tl.to(item, {
           x: 0,
-          rotation: -720, // Two full rotations clockwise
+          rotation: -720,
           opacity: 1,
           ease: "power3.out"
-        }, 0); // No stagger delay - all start at the same time
+        }, 0);
       });
     }
   });
-  
-  console.log("Skills animation setup complete");
 };
 
 // Showcase Items
 const initShowcaseItems = async () => {
-  console.log("initShowcaseItems started for film strip effect"); // DEBUG
   try {
     const response = await fetch("assets/data/project.json");
-    console.log("Fetched project.json response:", response); // DEBUG
-    if (!response.ok) {
-      console.error(
-        "Failed to fetch project.json:",
-        response.status,
-        response.statusText
-      );
-      return;
-    }
+    if (!response.ok) return;
+    
     const data = await response.json();
-    console.log("Parsed project.json data for film strip:", data); // DEBUG
-    const showcaseLinksContainer = document.getElementById("show-case"); // Container for text links
-    const imagePreviewViewport = document.getElementById(
-      "video-preview-container"
-    ); // This is the viewport
+    const showcaseLinksContainer = document.getElementById("show-case");
+    const imagePreviewViewport = document.getElementById("video-preview-container");
 
-    if (!showcaseLinksContainer || !imagePreviewViewport) {
-      console.error(
-        "Required containers for showcase (links or viewport) not found."
-      );
-      return;
-    }
+    if (!showcaseLinksContainer || !imagePreviewViewport) return;
 
-    // Clear previous content from viewport (e.g., old single image display) and create imageStrip
     imagePreviewViewport.innerHTML = "";
     const imageStrip = document.createElement("div");
-    imageStrip.id = "image-strip"; // For selection and styling
-    // CSS will handle display:flex, height:100% for imageStrip
+    imageStrip.id = "image-strip";
     imagePreviewViewport.appendChild(imageStrip);
 
     data.forEach((item, index) => {
-      // Create the text link (.showcase-item)
       const showcaseItemLink = document.createElement("div");
       showcaseItemLink.classList.add("showcase-item");
       showcaseItemLink.textContent = item.name;
-      showcaseItemLink.dataset.projectIndex = index; // Store index to link to the image in the strip
-      console.log(`Created showcaseItemLink for ${item.name}, index: ${index}`); // DEBUG
+      showcaseItemLink.dataset.projectIndex = index;
       showcaseLinksContainer.appendChild(showcaseItemLink);
 
-      // Create the image and add it to the imageStrip
       const img = document.createElement("img");
-      img.src = item.img; // Assuming item.img has the correct image path
-      img.alt = item.name; // For accessibility
-      // Styling for img (width, height, object-fit) should come from CSS, e.g., #image-strip img
+      img.src = item.img;
+      img.alt = item.name;
       imageStrip.appendChild(img);
     });
-    console.log("initShowcaseItems for film strip finished successfully"); // DEBUG
   } catch (error) {
-    console.error("Error in initShowcaseItems (film strip):", error); // DEBUG
+    console.error("Error in initShowcaseItems:", error);
   }
 };
 
 // Showcase Hover Image Effect
 const initShowcaseHoverImage = (locoScrollInstance) => {
-  console.log("initShowcaseHoverImage started for film strip"); // DEBUG
   const showcaseLinksContainer = document.getElementById("show-case");
-  const imagePreviewViewport = document.getElementById(
-    "video-preview-container"
-  );
-  const imageStrip = document.getElementById("image-strip"); // The strip containing all images
+  const imagePreviewViewport = document.getElementById("video-preview-container");
+  const imageStrip = document.getElementById("image-strip");
 
-  if (!showcaseLinksContainer || !imagePreviewViewport || !imageStrip) {
-    console.error(
-      "Required elements for showcase hover (film strip) not found."
-    );
-    return;
-  }
+  if (!showcaseLinksContainer || !imagePreviewViewport || !imageStrip) return;
 
-  // Mouse move is still used for the viewport container itself, not for individual images
-  let mouseX = 0,
-    mouseY = 0;
+  let mouseX = 0, mouseY = 0;
   document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
     if (imagePreviewViewport.classList.contains("visible")) {
       gsap.to(imagePreviewViewport, {
-        // Animate the viewport container
         x: mouseX + 20,
         y: mouseY - imagePreviewViewport.offsetHeight / 2,
         duration: 0.3,
@@ -335,58 +249,35 @@ const initShowcaseHoverImage = (locoScrollInstance) => {
   });
 
   showcaseLinksContainer.addEventListener("mouseenter", () => {
-    // Show the viewport when mouse enters the links area
     if (!imagePreviewViewport.classList.contains("visible")) {
-      console.log("Making image preview viewport visible for film strip."); // DEBUG
       imagePreviewViewport.classList.add("visible");
       gsap.to(imagePreviewViewport, { opacity: 1, duration: 0.3 });
     }
   });
 
   showcaseLinksContainer.addEventListener("mouseleave", (e) => {
-    if (
-      !showcaseLinksContainer.contains(e.relatedTarget) &&
-      e.relatedTarget !== imagePreviewViewport
-    ) {
-      console.log("Fading out image preview viewport (film strip)."); // DEBUG
+    if (!showcaseLinksContainer.contains(e.relatedTarget) && e.relatedTarget !== imagePreviewViewport) {
       if (imagePreviewViewport.classList.contains("visible")) {
         gsap.to(imagePreviewViewport, {
           opacity: 0,
           duration: 0.15,
-          onComplete: () => {
-            console.log(
-              "Image preview viewport faded out, removing visible class."
-            ); // DEBUG
-            imagePreviewViewport.classList.remove("visible");
-            // No need to clear src or currentImageSrc as we are moving the strip
-          },
+          onComplete: () => imagePreviewViewport.classList.remove("visible"),
         });
       }
     }
   });
 
-  // Add event listeners to individual .showcase-item links
   setTimeout(() => {
-    const showcaseItemLinks =
-      showcaseLinksContainer.querySelectorAll(".showcase-item");
-    console.log(
-      "Found showcase item links for film strip events:",
-      showcaseItemLinks.length
-    ); // DEBUG
+    const showcaseItemLinks = showcaseLinksContainer.querySelectorAll(".showcase-item");
+    console.log("Found showcase item links for film strip events:", showcaseItemLinks.length); // DEBUG
 
     showcaseItemLinks.forEach((itemLink) => {
       itemLink.addEventListener("mouseenter", () => {
         const projectIndex = parseInt(itemLink.dataset.projectIndex, 10);
-        console.log(
-          "Showcase item link mouseenter, project index:",
-          projectIndex
-        ); // DEBUG
+        console.log("Showcase item link mouseenter, project index:", projectIndex); // DEBUG
 
         if (isNaN(projectIndex)) {
-          console.warn(
-            "Invalid projectIndex found in dataset for item:",
-            itemLink.textContent
-          ); // DEBUG
+          console.warn("Invalid projectIndex found in dataset for item:", itemLink.textContent); // DEBUG
           return;
         }
 
@@ -395,9 +286,7 @@ const initShowcaseHoverImage = (locoScrollInstance) => {
         const imageWidth = imagePreviewViewport.offsetWidth; // This should match CSS: 20vw
         const targetX = -(projectIndex * imageWidth);
 
-        console.log(
-          `Image width: ${imageWidth}, Project index: ${projectIndex}, Target X: ${targetX}`
-        ); // DEBUG
+        console.log(`Image width: ${imageWidth}, Project index: ${projectIndex}, Target X: ${targetX}`); // DEBUG
 
         gsap.to(imageStrip, {
           x: targetX,
@@ -499,6 +388,39 @@ const initLoaderAnimation = () => {
     });
 };
 
+// Background Geometric Shapes Only
+const initBackgroundShapes = () => {
+  const shapesContainer = document.createElement('div');
+  shapesContainer.className = 'background-shapes';
+  document.body.appendChild(shapesContainer);
+
+  const shapeTypes = ['circle', 'square', 'triangle'];
+  const shapeCount = window.innerWidth > 768 ? 15 : 8;
+
+  for (let i = 0; i < shapeCount; i++) {
+    const shape = document.createElement('div');
+    const shapeType = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+    shape.className = `bg-shape ${shapeType}`;
+
+    // Random size
+    const size = Math.random() * 100 + 50;
+    if (shapeType !== 'triangle') {
+      shape.style.width = `${size}px`;
+      shape.style.height = `${size}px`;
+    }
+
+    // Random position
+    shape.style.left = `${Math.random() * 100}%`;
+    shape.style.top = `${Math.random() * 100}%`;
+
+    // Random animation duration
+    shape.style.animationDuration = `${Math.random() * 20 + 10}s`;
+    shape.style.animationDelay = `${Math.random() * 5}s`;
+
+    shapesContainer.appendChild(shape);
+  }
+};
+
 // Initialize all components
 document.addEventListener("DOMContentLoaded", async () => {
   // Initialize Locomotive Scroll first, as other animations depend on it
@@ -563,4 +485,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   setTimeout(() => {
     ScrollTrigger.refresh();
   }, 500);
+
+  // Initialize background shapes
+  initBackgroundShapes();
 });
