@@ -1050,3 +1050,306 @@ nav h3, nav a {
   }
 }
 
+/* ==========================================================================
+   FEATURED WORKS INTERACTIVE EFFECTS
+   ========================================================================== */
+
+/* Work Page Interactive Effects */
+#work-page {
+  position: relative;
+}
+
+#work-page-top {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+#work-page-top:hover {
+  transform: translateY(-5px);
+}
+
+#work-page-top h2,
+#work-page-top h4 {
+  transition: all 0.3s ease;
+}
+
+#work-page-top:hover h2 {
+  color: var(--color-orange);
+  transform: scale(1.05);
+}
+
+#work-page-top:hover h4 span {
+  background: var(--color-orange);
+  transform: scale(1.1);
+}
+
+/* Enhanced Showcase Items */
+.showcase-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  padding: 1rem 2rem;
+  margin: 0.5rem 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid transparent;
+}
+
+.showcase-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 145, 73, 0.2), transparent);
+  transition: left 0.5s ease;
+  z-index: 1;
+}
+
+.showcase-item:hover::before {
+  left: 100%;
+}
+
+.showcase-item:hover {
+  transform: translateY(-8px) scale(1.02);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-orange);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(255, 145, 73, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.showcase-item:active {
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* Work Elements Enhanced */
+#work-elements .box {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+#work-elements .box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 145, 73, 0.1) 0%, 
+    rgba(187, 251, 255, 0.1) 50%, 
+    rgba(78, 113, 255, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+#work-elements .box:hover::before {
+  opacity: 1;
+}
+
+#work-elements .box:hover {
+  transform: translateY(-15px) scale(1.03);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: var(--color-orange);
+}
+
+#work-elements .box:hover .logo {
+  transform: translateX(-50%) scale(1.1);
+  color: var(--color-orange);
+  filter: drop-shadow(0 5px 15px rgba(255, 145, 73, 0.4));
+}
+
+#work-elements .box:hover img {
+  transform: scale(1.05);
+  filter: grayscale(0.3);
+}
+
+#work-elements .box:hover .techstack {
+  transform: translateY(-10px);
+}
+
+#work-elements .box:hover .techstack .tech-item {
+  transform: scale(1.05);
+  background: var(--color-orange);
+  color: var(--color-white);
+  box-shadow: 0 5px 15px rgba(255, 145, 73, 0.3);
+}
+
+/* Video Preview Enhanced */
+#video-preview-container {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 2px solid transparent;
+}
+
+#video-preview-container.visible {
+  border-color: var(--color-orange);
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 145, 73, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%) scale(1.02);
+}
+
+#preview-image-display {
+  transition: transform 0.3s ease;
+}
+
+#video-preview-container.visible #preview-image-display {
+  transform: scale(1.05);
+}
+
+/* Interactive Line Effects */
+#work-page hr {
+  border: 1px solid var(--color-white);
+  margin-bottom: 2vw;
+}
+
+#work-page hr.line-3 {
+  position: relative;
+  overflow: hidden;
+  animation-play-state: paused;
+}
+
+#work-page hr.line-3::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--color-orange), transparent);
+  animation: lineGlow 3s ease-in-out infinite;
+}
+
+@keyframes lineGlow {
+  0%, 100% {
+    left: -100%;
+    opacity: 0;
+  }
+  50% {
+    left: 100%;
+    opacity: 1;
+  }
+}
+
+/* Work Grid Animation */
+#work-elements {
+  position: relative;
+}
+
+#work-elements .box {
+  animation-fill-mode: both;
+}
+
+/* Staggered Animation for Work Items */
+#work-elements .box:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+#work-elements .box:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+#work-elements .box:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+#work-elements .box:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+/* Interactive Loading Animation */
+@keyframes workItemReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) rotateX(45deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+#work-elements .box.animate-in {
+  animation: workItemReveal 0.6s ease-out forwards;
+}
+
+/* Enhanced Showcase Hover Effects */
+.showcase-item:nth-child(odd):hover {
+  transform: translateY(-8px) scale(1.02) rotateZ(1deg);
+}
+
+.showcase-item:nth-child(even):hover {
+  transform: translateY(-8px) scale(1.02) rotateZ(-1deg);
+}
+
+/* Work Section Background Effect */
+#work-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 145, 73, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(187, 251, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+#work-page:hover::before {
+  opacity: 1;
+}
+
+/* Responsive Work Interactions */
+@media (max-width: 768px) {
+  .showcase-item {
+    padding: 0.8rem 1.5rem;
+  }
+  
+  .showcase-item:hover {
+    transform: translateY(-5px) scale(1.01);
+  }
+  
+  #work-elements .box:hover {
+    transform: translateY(-10px) scale(1.02);
+  }
+  
+  #work-page-top:hover {
+    transform: translateY(-3px);
+  }
+}
+
+@media (max-width: 425px) {
+  .showcase-item {
+    padding: 0.5rem 1rem;
+  }
+  
+  .showcase-item:hover {
+    transform: translateY(-3px);
+  }
+  
+  #work-elements .box:hover {
+    transform: translateY(-5px) scale(1.01);
+  }
+  
+  #work-page::before {
+    display: none; /* Disable background effects on small screens */
+  }
+}
+

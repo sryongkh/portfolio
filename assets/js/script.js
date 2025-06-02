@@ -421,6 +421,236 @@ const initBackgroundShapes = () => {
   }
 };
 
+// Featured Works Interactive Effects
+const initFeaturedWorksInteractions = () => {
+  // Enhanced Work Items Animation
+  const workItems = document.querySelectorAll('#work-elements .box');
+  
+  // Intersection Observer for work items reveal animation
+  const workObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('animate-in');
+        }, index * 150); // Stagger animation
+        workObserver.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.2,
+    rootMargin: '0px 0px -50px 0px'
+  });
+
+  // Observe work items when they're created
+  const observeWorkItems = () => {
+    const currentWorkItems = document.querySelectorAll('#work-elements .box');
+    currentWorkItems.forEach(item => {
+      workObserver.observe(item);
+    });
+  };
+
+  // Watch for new work items being added
+  const workContainer = document.querySelector('#work-elements');
+  if (workContainer) {
+    const workMutationObserver = new MutationObserver(() => {
+      observeWorkItems();
+    });
+    workMutationObserver.observe(workContainer, { childList: true });
+  }
+
+  // Enhanced showcase interactions
+  const initEnhancedShowcase = () => {
+    const showcaseContainer = document.querySelector('#show-case');
+    if (!showcaseContainer) return;
+
+    // Add dynamic background effect on showcase hover
+    showcaseContainer.addEventListener('mouseenter', () => {
+      const workPage = document.querySelector('#work-page');
+      if (workPage) {
+        workPage.style.setProperty('--dynamic-bg-opacity', '1');
+      }
+    });
+
+    showcaseContainer.addEventListener('mouseleave', () => {
+      const workPage = document.querySelector('#work-page');
+      if (workPage) {
+        workPage.style.setProperty('--dynamic-bg-opacity', '0');
+      }
+    });
+  };
+
+  // Work page top section interaction
+  const workPageTop = document.querySelector('#work-page-top');
+  if (workPageTop) {
+    workPageTop.addEventListener('click', () => {
+      // Add click ripple effect
+      const ripple = document.createElement('div');
+      ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 145, 73, 0.3);
+        transform: scale(0);
+        animation: rippleEffect 0.6s linear;
+        pointer-events: none;
+        width: 100px;
+        height: 100px;
+        left: 50%;
+        top: 50%;
+        margin-left: -50px;
+        margin-top: -50px;
+      `;
+      
+      workPageTop.style.position = 'relative';
+      workPageTop.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  }
+
+  // Add ripple animation keyframes
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes rippleEffect {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  initEnhancedShowcase();
+};
+
+// Enhanced Video Preview Interactions
+const initEnhancedVideoPreview = () => {
+  const previewContainer = document.querySelector('#video-preview-container');
+  const showcaseItems = document.querySelectorAll('.showcase-item');
+  
+  if (!previewContainer) return;
+
+  // Enhanced showcase item interactions
+  showcaseItems.forEach((item, index) => {
+    // Add entrance animation delay
+    item.style.animationDelay = `${index * 0.1}s`;
+    
+    // Enhanced hover effects
+    item.addEventListener('mouseenter', (e) => {
+      // Add slight rotation based on position
+      const isOdd = index % 2 === 0;
+      const rotation = isOdd ? '1deg' : '-1deg';
+      item.style.transform = `translateY(-8px) scale(1.02) rotateZ(${rotation})`;
+      
+      // Create floating particles on hover
+      createHoverParticles(e.target);
+    });
+
+    item.addEventListener('mouseleave', () => {
+      item.style.transform = '';
+    });
+  });
+};
+
+// Create floating particles on showcase hover
+const createHoverParticles = (element) => {
+  const rect = element.getBoundingClientRect();
+  const particleCount = 3;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.style.cssText = `
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: var(--color-orange);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.8;
+      left: ${rect.left + Math.random() * rect.width}px;
+      top: ${rect.top + Math.random() * rect.height}px;
+      animation: particleFloat 1s ease-out forwards;
+    `;
+    
+    document.body.appendChild(particle);
+    
+    setTimeout(() => {
+      particle.remove();
+    }, 1000);
+  }
+  
+  // Add particle animation
+  if (!document.querySelector('#particle-animation-style')) {
+    const style = document.createElement('style');
+    style.id = 'particle-animation-style';
+    style.textContent = `
+      @keyframes particleFloat {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-30px) scale(0);
+          opacity: 0;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+};
+
+// Work Section Background Animation
+const initWorkSectionBackground = () => {
+  const workPage = document.querySelector('#work-page');
+  if (!workPage) return;
+
+  // Add parallax effect on scroll
+  window.addEventListener('scroll', () => {
+    const rect = workPage.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+    
+    if (isVisible) {
+      const scrollProgress = Math.max(0, Math.min(1, 
+        (window.innerHeight - rect.top) / (window.innerHeight + rect.height)
+      ));
+      
+      // Animate background opacity based on scroll
+      const bgOpacity = scrollProgress * 0.5;
+      workPage.style.setProperty('--scroll-bg-opacity', bgOpacity.toString());
+    }
+  });
+
+  // Add dynamic CSS property for background control
+  const style = document.createElement('style');
+  style.textContent = `
+    #work-page::before {
+      opacity: var(--scroll-bg-opacity, 0);
+    }
+  `;
+  document.head.appendChild(style);
+};
+
+// Enhanced Line Animation
+const initEnhancedLineAnimation = () => {
+  const workLine = document.querySelector('#work-page hr.line-3');
+  if (!workLine) return;
+
+  // Trigger line animation when section comes into view
+  const lineObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+      }
+    });
+  }, {
+    threshold: 0.5
+  });
+
+  lineObserver.observe(workLine);
+};
+
 // Initialize all components
 document.addEventListener("DOMContentLoaded", async () => {
   // Initialize Locomotive Scroll first, as other animations depend on it
@@ -488,4 +718,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Initialize background shapes
   initBackgroundShapes();
+
+  // Initialize featured works interactions
+  initFeaturedWorksInteractions();
+
+  // Initialize enhanced video preview interactions
+  initEnhancedVideoPreview();
+
+  // Initialize work section background animation
+  initWorkSectionBackground();
+
+  // Initialize enhanced line animation
+  initEnhancedLineAnimation();
 });
