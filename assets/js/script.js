@@ -651,6 +651,279 @@ const initEnhancedLineAnimation = () => {
   lineObserver.observe(workLine);
 };
 
+// Content Protection & Anti-Theft System
+const initContentProtection = () => {
+  // Console warning message
+  console.clear();
+  console.log('%c⚠️ WARNING - CONTENT PROTECTION ACTIVE ⚠️', 
+    'color: #ff0000; font-size: 24px; font-weight: bold; background: #000; padding: 10px;');
+  console.log('%c🚫 This website\'s content is protected by copyright law.', 
+    'color: #ff4444; font-size: 16px; font-weight: bold;');
+  console.log('%c📝 Unauthorized copying, reproduction, or distribution is prohibited.', 
+    'color: #ff6666; font-size: 14px;');
+  console.log('%c⚖️ Legal action will be taken against violators.', 
+    'color: #ff8888; font-size: 14px;');
+  console.log('%c💼 For licensing inquiries, please contact the owner.', 
+    'color: #ffaaaa; font-size: 14px;');
+
+  // Disable right-click context menu
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    showProtectionMessage('Right-click is disabled to protect content.');
+    return false;
+  });
+
+  // Disable text selection
+  document.addEventListener('selectstart', function(e) {
+    e.preventDefault();
+    return false;
+  });
+
+  // Disable drag and drop
+  document.addEventListener('dragstart', function(e) {
+    e.preventDefault();
+    return false;
+  });
+
+  // Disable common developer tools shortcuts
+  document.addEventListener('keydown', function(e) {
+    // F12 (Developer Tools)
+    if (e.keyCode === 123) {
+      e.preventDefault();
+      showDevWarning();
+      return false;
+    }
+    
+    // Ctrl+Shift+I (Developer Tools)
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+      e.preventDefault();
+      showDevWarning();
+      return false;
+    }
+    
+    // Ctrl+Shift+J (Console)
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+      e.preventDefault();
+      showDevWarning();
+      return false;
+    }
+    
+    // Ctrl+U (View Source)
+    if (e.ctrlKey && e.keyCode === 85) {
+      e.preventDefault();
+      showProtectionMessage('Source code viewing is disabled.');
+      return false;
+    }
+    
+    // Ctrl+S (Save)
+    if (e.ctrlKey && e.keyCode === 83) {
+      e.preventDefault();
+      showProtectionMessage('Saving is disabled to protect content.');
+      return false;
+    }
+    
+    // Ctrl+A (Select All)
+    if (e.ctrlKey && e.keyCode === 65) {
+      e.preventDefault();
+      showProtectionMessage('Text selection is disabled.');
+      return false;
+    }
+    
+    // Ctrl+P (Print)
+    if (e.ctrlKey && e.keyCode === 80) {
+      e.preventDefault();
+      showProtectionMessage('Printing is disabled.');
+      return false;
+    }
+    
+    // Ctrl+C (Copy)
+    if (e.ctrlKey && e.keyCode === 67) {
+      e.preventDefault();
+      showProtectionMessage('Copying is disabled to protect content.');
+      return false;
+    }
+    
+    // Ctrl+V (Paste) - Less important but for consistency
+    if (e.ctrlKey && e.keyCode === 86) {
+      e.preventDefault();
+      return false;
+    }
+    
+    // Ctrl+X (Cut)
+    if (e.ctrlKey && e.keyCode === 88) {
+      e.preventDefault();
+      showProtectionMessage('Cutting is disabled to protect content.');
+      return false;
+    }
+  });
+
+  // Detect developer tools
+  let devtools = { open: false, orientation: null };
+  const threshold = 160;
+
+  setInterval(() => {
+    if (window.outerHeight - window.innerHeight > threshold || 
+        window.outerWidth - window.innerWidth > threshold) {
+      if (!devtools.open) {
+        devtools.open = true;
+        showDevWarning();
+        console.clear();
+        console.log('%c🚨 DEVELOPER TOOLS DETECTED! 🚨', 
+          'color: #ff0000; font-size: 30px; font-weight: bold; background: #000; padding: 15px;');
+      }
+    } else {
+      devtools.open = false;
+    }
+  }, 500);
+
+  // Prevent iframe embedding (clickjacking protection)
+  if (window.top !== window.self) {
+    window.top.location = window.self.location;
+  }
+
+  // Disable print screen (limited effectiveness)
+  document.addEventListener('keyup', function(e) {
+    if (e.keyCode === 44) {
+      showProtectionMessage('Screenshot functionality is discouraged.');
+    }
+  });
+
+  // Mouse protection for images
+  document.addEventListener('mousedown', function(e) {
+    if (e.target.tagName === 'IMG') {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Touch protection for mobile
+  document.addEventListener('touchstart', function(e) {
+    if (e.touches.length > 1) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Disable text highlighting
+  document.onselectstart = function() {
+    return false;
+  };
+
+  document.onmousedown = function() {
+    return false;
+  };
+
+  // Clear console periodically
+  setInterval(() => {
+    console.clear();
+    console.log('%c🔒 Content Protected - © 2024 Sirinya Portfolio', 
+      'color: #00ff00; font-size: 16px; font-weight: bold;');
+  }, 3000);
+};
+
+// Show protection message
+const showProtectionMessage = (message) => {
+  // Create temporary notification
+  const notification = document.createElement('div');
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 0, 0, 0.9);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    z-index: 999999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    max-width: 300px;
+    word-wrap: break-word;
+  `;
+  notification.textContent = `🚫 ${message}`;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    if (notification.parentNode) {
+      notification.parentNode.removeChild(notification);
+    }
+  }, 3000);
+};
+
+// Show developer tools warning
+const showDevWarning = () => {
+  let warningDiv = document.getElementById('dev-warning');
+  
+  if (!warningDiv) {
+    warningDiv = document.createElement('div');
+    warningDiv.id = 'dev-warning';
+    warningDiv.innerHTML = `
+      <h1>⚠️ ACCESS DENIED ⚠️</h1>
+      <p>🚫 Developer tools usage is not permitted on this website.</p>
+      <p>📝 This content is protected by copyright law.</p>
+      <p>⚖️ Unauthorized access or copying may result in legal action.</p>
+      <p>💼 For legitimate purposes, please contact the owner.</p>
+      <p style="margin-top: 30px; font-size: 16px;">This warning will disappear in 5 seconds...</p>
+    `;
+    document.body.appendChild(warningDiv);
+  }
+  
+  warningDiv.style.display = 'flex';
+  
+  setTimeout(() => {
+    if (warningDiv) {
+      warningDiv.style.display = 'none';
+    }
+  }, 5000);
+};
+
+// Image protection
+const initImageProtection = () => {
+  // Disable image dragging
+  document.querySelectorAll('img').forEach(img => {
+    img.addEventListener('dragstart', function(e) {
+      e.preventDefault();
+      return false;
+    });
+    
+    img.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      showProtectionMessage('Image downloading is disabled.');
+      return false;
+    });
+  });
+};
+
+// URL obfuscation (basic)
+const initURLProtection = () => {
+  // Disable history manipulation attempts
+  window.addEventListener('popstate', function(e) {
+    if (e.state && e.state.protected) {
+      history.pushState({protected: true}, '', location.href);
+    }
+  });
+  
+  // Add initial state
+  history.pushState({protected: true}, '', location.href);
+};
+
+// Initialize all protection measures
+const initAllProtections = () => {
+  initContentProtection();
+  initImageProtection();
+  initURLProtection();
+  
+  // Additional console warning
+  setTimeout(() => {
+    console.clear();
+    console.log('%c', 'font-size: 1px;');
+    console.log('%c🛡️ SECURITY NOTICE 🛡️\n\nThis website is protected by advanced security measures.\nAll activity is monitored and logged.\n\n© 2024 Sirinya Portfolio - All Rights Reserved', 
+      'color: #ff6600; font-size: 18px; font-weight: bold; line-height: 1.5;');
+  }, 1000);
+};
+
 // Initialize all components
 document.addEventListener("DOMContentLoaded", async () => {
   // Initialize Locomotive Scroll first, as other animations depend on it
@@ -730,4 +1003,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Initialize enhanced line animation
   initEnhancedLineAnimation();
+
+  // Initialize all protection measures
+  initAllProtections();
 });
