@@ -26,13 +26,13 @@
   {
     "link": "https://www.sumplong.com/",
     "name": "SumPlong!",
-    "stack": ["Wordpress", "HTML", "CSS", "JavaScript"],
+    "stack": ["Astro.js", "HTML", "CSS", "JavaScript"],
     "img": "assets/img/sumplong-cover.png"
   },
   {
     "link": "https://www.cybericestudio.com/ah-1",
     "name": "Adhub Marketplace",
-    "stack": ["Wordpress", "HTML", "CSS", "JavaScript"],
+    "stack": ["Astro.js", "TailwindCSS", "Wordpress", "HTML", "CSS", "JavaScript"],
     "img": "assets/img/adhub-cover.png"
   }
 ]
