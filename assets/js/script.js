@@ -190,6 +190,14 @@ const initShowcaseItems = async () => {
       showcaseItemLink.classList.add("showcase-item");
       showcaseItemLink.textContent = item.name;
       showcaseItemLink.dataset.projectIndex = index;
+      showcaseItemLink.dataset.projectUrl = item.link;
+      
+      showcaseItemLink.addEventListener('click', () => {
+        if (item.link && item.link !== '#') {
+          window.open(item.link, '_blank');
+        }
+      });
+      
       showcaseLinksContainer.appendChild(showcaseItemLink);
 
       const img = document.createElement("img");

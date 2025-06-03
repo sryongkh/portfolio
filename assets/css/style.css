@@ -795,31 +795,44 @@ nav a {
   gap: 1vw;
 }
 
-.showcase-item::before,
-.showcase-item::after {
-  content: "*";
-  font-size: 2.5vw;
-  color: var(--color-orange);
+.showcase-item::before {
+  content: "Click to visit website";
+  position: absolute;
+  top: -3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  white-space: nowrap;
   opacity: 0;
-  transform: scale(0) rotate(0deg);
-  transform-origin: center;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  display: inline-block;
-  will-change: transform, opacity;
-}
-
-.showcase-item:hover::before,
-.showcase-item:hover::after {
-  opacity: 1;
-  transform: scale(1) rotate(360deg);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
 }
 
 .showcase-item:hover::before {
-  animation: rotateLeft 2s linear infinite;
+  opacity: 1;
+}
+
+.showcase-item::after {
+  content: "↗";
+  position: absolute;
+  right: -3rem;
+  top: 50%;
+  transform: translateY(-50%) translateX(-10px);
+  font-size: 2vw;
+  color: var(--color-orange);
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
 }
 
 .showcase-item:hover::after {
-  animation: rotateRight 2s linear infinite;
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
 }
 
 .showcase-item:hover {
@@ -881,9 +894,15 @@ nav a {
     gap: 0.5rem;
   }
 
-  .showcase-item::before,
+  .showcase-item::before {
+    font-size: 0.7rem;
+    top: -2.5rem;
+    padding: 0.4rem 0.8rem;
+  }
+
   .showcase-item::after {
     font-size: 1.2rem;
+    right: -2rem;
   }
 
   #video-preview-container {
